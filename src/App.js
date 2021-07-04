@@ -22,7 +22,7 @@ function App() {
       setLongitude(position.coords.longitude)
 
       if(Latitude && Longitude ){
-        let GetLocation = `http://api.weatherapi.com/v1/current.json?key=62dceb908301426fbcc03441210307&q=${Latitude},${Longitude}`
+        let GetLocation = `https://api.weatherapi.com/v1/current.json?key=62dceb908301426fbcc03441210307&q=${Latitude},${Longitude}`
 
         let FetchDataWeather = async () => {
           const Data = await fetch(GetLocation).then(respon => respon.json())
