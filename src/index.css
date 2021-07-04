@@ -13,8 +13,8 @@
   justify-content: center;
   align-items: center;
   background-image: radial-gradient(
-    circle 830px at 95.6% -5%,
-    rgb(110, 105, 59) 20%,
+    circle 40rem at 95.6% 0%,
+    rgb(110, 105, 59) 40%,
     rgb(25, 43, 53) 90%
   );
 }

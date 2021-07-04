@@ -4,6 +4,9 @@ import {useState, useEffect} from 'react';
 
 function App() {
   const[Flag,setFlag] = useState(false)
+  const[Flag2,setFlag2] = useState(false)
+  const[Flag3,setFlag3] = useState(false)
+  const[Flag4,setFlag4] = useState(false)
   const[Latitude, setLatitude] = useState('')
   const[Longitude, setLongitude] = useState('')
   const[Country, setCountry] = useState('')
@@ -17,6 +20,7 @@ function App() {
     
   useEffect(() => {
     if(Flag) {
+      
     let succes = (position) => {
       setLatitude(position.coords.latitude)
       setLongitude(position.coords.longitude)
@@ -26,13 +30,21 @@ function App() {
 
         let FetchDataWeather = async () => {
           const Data = await fetch(GetLocation).then(respon => respon.json())
-          
+          console.log(Data)
+          if(Flag2){
+            setTemp_c(Data.current.temp_f + ' °F')
+            setFlag3(true)
+
+          } else {
+            setTemp_c(Data.current.temp_c + ' °C')
+            setFlag3(false)
+            
+          }
           setCountry(Data.location.country )
           setCity(Data.location.name +"/")
           setCloud(Data.current.cloud)
           setWind_mph(Data.current.wind_mph)
           setPressure_mb(Data.current.pressure_mb)
-          setTemp_c(Data.current.temp_c)
           setConditionText(Data.current.condition.text)
           setConditionIcon(Data.current.condition.icon)
         }
@@ -50,7 +62,7 @@ function App() {
       navigator.geolocation.getCurrentPosition(succes, error)
     }
   }
-  },[Flag,Latitude,Longitude,Country,City,Cloud,Wind_mph,Pressure_mb,Temp_c,ConditionText])
+  },[Flag,Flag2,Latitude,Longitude,Country,City,Cloud,Wind_mph,Pressure_mb,Temp_c,ConditionText])
 
   return (
     <div className="App">
@@ -59,22 +71,30 @@ function App() {
       <div className="Country_City">
         <div className="Temperature">
           <img src={ConditionIcon}></img>
-          <h3>{Temp_c}<span> °C:</span></h3>
+          <h3>{Temp_c}</h3>
         </div>
         <div className="Conditions">
           <h3>{ConditionText}</h3>
-          <h3><span>Wind speed: </span>{Wind_mph}<span>m/s</span></h3>
-          <h3><span>Clouds: </span>{Cloud}<span>%</span></h3>
-          <h3><span>Pressure: </span>{Pressure_mb}<span>mb</span></h3>
+          <h3><span>Wind speed: </span>{Wind_mph}<span> m/s</span></h3>
+          <h3><span>Clouds: </span>{Cloud}<span> %</span></h3>
+          <h3><span>Pressure: </span>{Pressure_mb}<span> mb</span></h3>
         </div>
       </div>
       <div className="Buttons">
-        <button onClick={() => setFlag(true)}>
+        <button className="Location" onClick={() => setFlag(true)}>
           My location Weather
         </button>
-        {/* <button onClick={() => console.log('cambio')}>
-          DEGRESS°F/C
-        </button> */}
+        <button className="Degress" onClick={() =>{
+            if(!Flag3){
+              setFlag2(true)
+            } else {
+              setFlag2(false)
+            }
+          }
+        }
+          >
+          DEGRESS °F/°C
+        </button>
       </div>
     </div>
   )
