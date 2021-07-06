@@ -3,10 +3,8 @@ import './App.css';
 import {useState, useEffect} from 'react';
 
 function App() {
-  const[Flag,setFlag] = useState(false)
   const[Flag2,setFlag2] = useState(false)
   const[Flag3,setFlag3] = useState(false)
-  const[Flag4,setFlag4] = useState(false)
   const[Latitude, setLatitude] = useState('')
   const[Longitude, setLongitude] = useState('')
   const[Country, setCountry] = useState('')
@@ -19,8 +17,7 @@ function App() {
   const[ConditionIcon, setConditionIcon] = useState('')
     
   useEffect(() => {
-    if(Flag) {
-      
+
     let succes = (position) => {
       setLatitude(position.coords.latitude)
       setLongitude(position.coords.longitude)
@@ -30,7 +27,6 @@ function App() {
 
         let FetchDataWeather = async () => {
           const Data = await fetch(GetLocation).then(respon => respon.json())
-          console.log(Data)
           if(Flag2){
             setTemp_c(Data.current.temp_f + ' °F')
             setFlag3(true)
@@ -61,8 +57,7 @@ function App() {
     } else {
       navigator.geolocation.getCurrentPosition(succes, error)
     }
-  }
-  },[Flag,Flag2,Latitude,Longitude,Country,City,Cloud,Wind_mph,Pressure_mb,Temp_c,ConditionText])
+  },[Flag2,Latitude,Longitude,Country,City,Cloud,Wind_mph,Pressure_mb,Temp_c,ConditionText])
 
   return (
     <div className="App">
@@ -81,19 +76,13 @@ function App() {
         </div>
       </div>
       <div className="Buttons">
-        <button className="Location" onClick={() => setFlag(true)}>
-          My location Weather
-        </button>
         <button className="Degress" onClick={() =>{
-            if(!Flag3){
-              setFlag2(true)
-            } else {
-              setFlag2(false)
-            }
+          if(!Flag3){
+            setFlag2(true)
+          } else {
+            setFlag2(false)
           }
-        }
-          >
-          DEGRESS °F/°C
+        }}>DEGRESS °F/°C
         </button>
       </div>
     </div>
