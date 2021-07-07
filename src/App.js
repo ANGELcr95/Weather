@@ -1,6 +1,7 @@
 /* eslint-disable */
 import './App.css';
 import {useState, useEffect} from 'react';
+let render = 0;
 
 function App() {
   const[Flag2,setFlag2] = useState(false)
@@ -15,6 +16,9 @@ function App() {
   const[Temp_c, setTemp_c] = useState('')
   const[ConditionText, setConditionText] = useState('')
   const[ConditionIcon, setConditionIcon] = useState('')
+  
+  render++
+  console.log(render)
     
   useEffect(() => {
 
@@ -57,7 +61,7 @@ function App() {
     } else {
       navigator.geolocation.getCurrentPosition(succes, error)
     }
-  },[Flag2,Latitude,Longitude,Country,City,Cloud,Wind_mph,Pressure_mb,Temp_c,ConditionText])
+  },[Flag2,Latitude,Longitude])
 
   return (
     <div className="App">
@@ -90,3 +94,5 @@ function App() {
 }
 
 export default App;
+
+
